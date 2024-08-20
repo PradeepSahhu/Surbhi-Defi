@@ -9,18 +9,24 @@ import AuctionCard from "@/Components/AuctionCard";
 import Betting from "@/Components/Betting";
 import HighestBidder from "@/Components/HighestBidder";
 import BoughtCard from "@/Components/BoughtCard";
+import SellCard from "@/Components/SellCard";
 
 export default function Home() {
-  //show boolean states
+  //!show boolean states for auction
+  //******************* Auction ********************** */
   const [showAuction, setShowAuction] = useState(false);
 
-  //showBetYourOwn
+  //!showBetYourOwn
   const [showBetYourOwn, setShowBetYourOwn] = useState(false);
 
-  //show betting option
+  //!show betting option
   const [showInput, setShowInput] = useState(false);
+
+  //!sell your asset option
+  const [showSellAsset, setShowSellAsset] = useState(false);
+
   return (
-    <div className="bg-black">
+    <div className="bg-black mt-2">
       <div className="flex justify-center">
         <h1 className="text-4xl">Defi Kingdon Game</h1>
       </div>
@@ -60,7 +66,10 @@ export default function Home() {
           Bet Your Game Asset
           <SiRiotgames className="inline-block m-2 text-4xl" />
         </button>
-        <button className="px-5 py-2 bg-yellow-400 rounded-md text-black hover:scale-90 transition-all duration-300">
+        <button
+          className="px-5 py-2 bg-yellow-400 rounded-md text-black hover:scale-90 transition-all duration-300"
+          onClick={() => setShowSellAsset(!showSellAsset)}
+        >
           Sell Your Asset
           <SiAmazongames className="inline-block m-2 text-4xl" />
         </button>
@@ -134,6 +143,15 @@ export default function Home() {
             <BoughtCard />
             <BoughtCard />
             <BoughtCard />
+          </div>
+        </div>
+      )}
+
+      {showSellAsset && (
+        <div>
+          <div className="flex gap-x-10 mx-5 my-5">
+            <SellCard />
+            <SellCard />
           </div>
         </div>
       )}
