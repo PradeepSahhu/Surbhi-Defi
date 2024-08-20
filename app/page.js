@@ -245,6 +245,9 @@ export default function Home() {
                 )}
               </div>
             </div>
+            <div className=" flex justify-center">
+              <p className="text-yellow-400 text-4xl ">You Win</p>
+            </div>
           </div>
         </div>
       )}
