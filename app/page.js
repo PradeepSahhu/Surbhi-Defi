@@ -11,6 +11,17 @@ import HighestBidder from "@/Components/HighestBidder";
 import BoughtCard from "@/Components/BoughtCard";
 import SellCard from "@/Components/SellCard";
 
+//Stone, Paper & Scissor
+import { FaHandRock } from "react-icons/fa";
+import { FaHandPaper } from "react-icons/fa";
+import { FaHandScissors } from "react-icons/fa";
+
+//robot
+import { FaRobot } from "react-icons/fa";
+
+//start
+import { MdOutlineStart } from "react-icons/md";
+
 export default function Home() {
   //!show boolean states for auction
   //******************* Auction ********************** */
@@ -24,6 +35,15 @@ export default function Home() {
 
   //!sell your asset option
   const [showSellAsset, setShowSellAsset] = useState(false);
+
+  //! play rock, paper and scissor
+
+  const [showPlayGame, setShowPlayGame] = useState(false);
+
+  //playerchoide
+
+  const [playerChoice, setPlayerChoice] = useState();
+  const [computerChoice, setComputerChoice] = useState(1);
 
   return (
     <div className="bg-black mt-2">
@@ -72,6 +92,13 @@ export default function Home() {
         >
           Sell Your Asset
           <SiAmazongames className="inline-block m-2 text-4xl" />
+        </button>
+        <button
+          className="px-5 py-2 bg-yellow-400 rounded-md text-black hover:scale-90 transition-all duration-300"
+          onClick={() => setShowPlayGame(!showPlayGame)}
+        >
+          Play Stone Paper Scissor
+          <FaRobot className="inline-block m-2 text-4xl" />
         </button>
       </div>
 
@@ -149,10 +176,75 @@ export default function Home() {
 
       {showSellAsset && (
         <div>
-          <div></div>
+          <div className="flex justify-center">
+            <p className="text-3xl text-yellow-400">
+              Sell Your Own Gaming Assets
+            </p>
+          </div>
           <div className="flex gap-x-10 mx-5 my-5">
             <SellCard />
             <SellCard />
+          </div>
+        </div>
+      )}
+
+      {showPlayGame && (
+        <div>
+          <div className="inline-block w-1/2">
+            <form className="grid bg-black px-20 py-10  col-start-1 col-end-3 rounded-xl">
+              <div className="flex justify-center mb-2">
+                <p className="text-[2rem] font-bold text-yellow-500 text-transparent">
+                  Rock, Paper,Scissor Game
+                </p>
+              </div>
+              <label className="grid col-start-1 col-end-1 ">
+                Enter your choice
+              </label>
+
+              <select
+                className="text-white w-full  p-5 rounded-md my-5 border-yellow-400 border-2 bg-transparent focus:border-yellow-400 focus:text-white focus:outline-none"
+                required
+                placeholder="Enter Your Choice"
+                onChange={(e) => setPlayerChoice(e.target.value)}
+              >
+                <option value={0}>Rock</option>
+                <option value={1}>Paper</option>
+                <option value={2}>Scissor</option>
+              </select>
+            </form>
+            <div className="flex justify-center">
+              <button className="px-8 py-2 bg-yellow-400 rounded-xl text-black">
+                Play
+                <MdOutlineStart className="inline-block text-3xl m-2 text-black" />
+              </button>
+            </div>
+          </div>
+
+          <div className="inline-block w-1/2">
+            <div className="flex justify-between">
+              <p className="text-yellow-400 text-3xl">Your Choice</p>
+              <p className="text-yellow-400 text-3xl">Computer Choice</p>
+            </div>
+            <div className="flex justify-between mx-5">
+              <div className="flex justify-start">
+                {playerChoice == 0 ? (
+                  <FaHandRock className="text-[12rem] rotate-90" />
+                ) : playerChoice == 1 ? (
+                  <FaHandPaper className="text-[12rem] rotate-90" />
+                ) : (
+                  <FaHandScissors className="text-[12rem] rotate-180" />
+                )}
+              </div>
+              <div className="flex justify-end">
+                {computerChoice == 0 ? (
+                  <FaHandRock className="text-[12rem] -rotate-90" />
+                ) : computerChoice == 1 ? (
+                  <FaHandPaper className="text-[12rem] -rotate-90" />
+                ) : (
+                  <FaHandScissors className="text-[12rem] rotate-180" />
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}
