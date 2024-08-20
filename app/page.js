@@ -149,6 +149,7 @@ export default function Home() {
 
       {showSellAsset && (
         <div>
+          <div></div>
           <div className="flex gap-x-10 mx-5 my-5">
             <SellCard />
             <SellCard />
