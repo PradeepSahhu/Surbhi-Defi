@@ -52,16 +52,28 @@ export default function Home() {
       </div>
       <div className="m-5 ">
         <div className="">
-          <p>
+          <p className="text-2xl">
             Your Account{" "}
             <span className="text-yellow-400">
               0x00000000000000000000000000000
             </span>
           </p>
-          <div className=" ">
+          <div className="text-2xl ">
             {" "}
             <p>Your Balance : 0</p>
           </div>
+        </div>
+        <div>
+          <p className="text-2xl">
+            Network Name:
+            <span className="text-2xl text-yellow-400"> SurbhiSubnet</span>
+          </p>
+        </div>
+        <div>
+          <p className="text-2xl">
+            Network Chain ID:
+            <span className="text-2xl text-yellow-400"> 12012</span>
+          </p>
         </div>
         <div className="justify-end flex">
           <button className="px-5 py-2 bg-gradient-to-r from-cyan-300 to-indigo-600 rounded-md text-black hover:scale-90 transition-all duration-300">
