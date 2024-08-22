@@ -58,7 +58,7 @@ export default async function NetworkDetails() {
     console.log("The blockchain id is : " + parseInt(blockchainID));
     // console.log(blockchainName);
 
-    return { blockchainID, blockchainName };
+    return { blockchainID, blockchainName, accounts };
   } catch (error) {
     console.error("User rejected the request:", error);
   }

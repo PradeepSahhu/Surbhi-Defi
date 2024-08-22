@@ -434,6 +434,19 @@ const nextConfig = {
         inputs: [
           {
             internalType: "uint256",
+            name: "_choice",
+            type: "uint256",
+          },
+        ],
+        name: "toBuyNFT",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
             name: "_tokenID",
             type: "uint256",
           },

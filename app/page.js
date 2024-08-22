@@ -27,6 +27,10 @@ import { FaRobot } from "react-icons/fa";
 //start
 import { MdOutlineStart } from "react-icons/md";
 
+//IPFS fetch from contract to get the data.
+
+import ContractIPFSFetch from "./Functionality/contractIPFSFetch";
+
 export default function Home() {
   //!show boolean states for auction
   //******************* Auction ********************** */
@@ -55,6 +59,15 @@ export default function Home() {
   const [tokenBalance, setTokenBalance] = useState();
   const [chainID, setChainID] = useState();
   const [chainName, setChainName] = useState();
+  const [chainAccount, setChainAccount] = useState();
+
+  // to get the current ongoing data.
+
+  const [fetch, setFetch] = useState();
+  const [seller, setSeller] = useState();
+  const [tokenID, setTokenID] = useState();
+
+  const [currentAucData, setCurrentAucData] = useState();
 
   //Functions of the contract.
 
@@ -70,17 +83,43 @@ export default function Home() {
 
   //get Network details from window.etherem.request method
   const getNetworkDetails = async () => {
-    const { blockchainID, blockchainName } = await NetworkDetails();
+    const { blockchainID, blockchainName, accounts } = await NetworkDetails();
     setChainID(blockchainID);
     setChainName(blockchainName);
+    setChainAccount(accounts[0]);
 
     console.log(blockchainID, blockchainName);
+    console.log("The accounts is : " + accounts[0]);
   };
+
+  //to know about current ongoing auction
+
+  const ongoingAuction = async () => {
+    console.log("this is working");
+    const contractInstance = await DefiContractConnection();
+    const auction = await contractInstance.currentAuction();
+
+    console.log("current auction : " + auction);
+    setFetch([auction.URI]);
+    setSeller(auction.seller);
+    setTokenID(auction.NFTID);
+  };
+
+  const getIPFSData = async () => {
+    // res is an array having only one element
+    const res = await ContractIPFSFetch(fetch);
+    console.log("The result from ipfs is : " + res[0]);
+  };
+
+  if (fetch !== undefined) {
+    getIPFSData();
+  }
 
   useEffect(() => {
     getUserTokenBalance();
     getNetworkDetails();
-  });
+    ongoingAuction();
+  }, []);
 
   return (
     <div className="bg-black mt-2">
@@ -90,14 +129,16 @@ export default function Home() {
       <div className="m-5 ">
         <div className="">
           <p className="text-2xl">
-            Your Account{" "}
-            <span className="text-yellow-400">
-              0x00000000000000000000000000000
-            </span>
+            Your Account <span className="text-yellow-400">{chainAccount}</span>
           </p>
           <div className="text-2xl ">
             {" "}
-            <p>Your Balance : {tokenBalance ? tokenBalance : 0}</p>
+            <p>
+              Your Balance :{" "}
+              <span className="text-yellow-400">
+                {tokenBalance ? tokenBalance : 0}
+              </span>
+            </p>
           </div>
         </div>
         <div>
@@ -163,14 +204,11 @@ export default function Home() {
             <div>
               <p>
                 Your Address :{" "}
-                <span className="text-lg text-yellow-400">
-                  {" "}
-                  0x161aBA4657174De9a36C3Ee71bC8163118d88d43
-                </span>
+                <span className="text-lg text-yellow-400"> {chainAccount}</span>
               </p>
             </div>
             <div>
-              <p>Your Balance : 100</p>
+              <p>Your Balance : {tokenBalance}</p>
             </div>
             {!showInput && (
               <div className="flex justify-center gap-x-5">
@@ -219,7 +257,12 @@ export default function Home() {
             </p>
           </div>
           {/* //Need all the Assets that i have. */}
-          <div className="flex gap-x-10 mx-5 my-5">
+          <div className="flex flex-wrap gap-10  mx-5 my-5">
+            <BoughtCard />
+            <BoughtCard />
+            <BoughtCard />
+            <BoughtCard />
+            <BoughtCard />
             <BoughtCard />
             <BoughtCard />
             <BoughtCard />

@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 export default async function DefiContractConnection() {
-  const contractAddress = "0x50Ee700eD2F2207ef78AE6d8f6FC553073982ffD";
+  const contractAddress = "0x3909609Ab41651d7f34fd567216b14E6F1165494";
 
   const tokenAbi = process.env.abi;
 
