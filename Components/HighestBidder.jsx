@@ -1,16 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import DefiContractConnection from "@/app/Functionality/ContractConnection";
 
 export default function HighestBidder({
-  index,
-  name,
+  tokenID,
+  seller,
   amount,
   address,
   time,
-  removeStudent,
 }) {
   const [showDropDown, setShowDropDown] = useState(false);
+
+  const getHighestBidderDetails = async () => {
+    const contractInstance = await DefiContractConnection();
+
+    // contractInstance.
+  };
 
   return (
     <div className="my-5 ">
@@ -21,13 +27,13 @@ export default function HighestBidder({
               className={`font-bold mr-2 text-white
                     `}
             >
-              {index ? index + 1 : 0}
+              {tokenID ? tokenID : 0}
             </p>
           </div>
 
           <div>
             <p className="text-gray-600 font-extralight text-sm">
-              {address ? address : "0x161aBA4657174De9a36C3Ee71bC8163118d88d43"}
+              {seller ? seller : "0x161aBA4657174De9a36C3Ee71bC8163118d88d43"}
             </p>
           </div>
           <div className="justify-end text-gray-400 ml-8 mr-8">

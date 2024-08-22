@@ -1,16 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useEffect } from "react";
-import HighestBidder from "./HighestBidder";
+// import HighestBidder from "./HighestBidder";
 
 export default function AuctionCard({
   itemName,
   itemSrc,
   itemDescription,
   itemPrice,
-  setShowZoomCard,
-  index,
-  setZoomIndex,
 }) {
   return (
     <div className="relative inline-block w-52 group">

@@ -108,7 +108,15 @@ export default function Home() {
   const getIPFSData = async () => {
     // res is an array having only one element
     const res = await ContractIPFSFetch(fetch);
+    setCurrentAucData(res[0]);
     console.log("The result from ipfs is : " + res[0]);
+  };
+
+  //converting image ipfs://hash to ipfs.io/ipfs/hash
+
+  const getImage = (ipfsURL) => {
+    const hash = ipfsURL.split("ipfs://")[1];
+    return `https://ipfs.io/ipfs/${hash}`;
   };
 
   if (fetch !== undefined) {
@@ -240,10 +248,15 @@ export default function Home() {
             </div>
             <div className="flex justify-center">
               {" "}
-              <AuctionCard />
+              <AuctionCard
+                itemName={currentAucData.name}
+                itemSrc={getImage(currentAucData.image)}
+                itemDescription={currentAucData.description}
+                itemPrice={currentAucData.price}
+              />
             </div>
             <div>
-              <HighestBidder />
+              <HighestBidder itemSeller={seller} itemTokenID={tokenID} />
             </div>
           </div>
         </div>
