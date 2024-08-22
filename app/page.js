@@ -4,12 +4,17 @@ import Image from "next/image";
 import { CgGames } from "react-icons/cg";
 import { SiRiotgames, SiAmazongames } from "react-icons/si";
 import { GiWantedReward } from "react-icons/gi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AuctionCard from "@/Components/AuctionCard";
 import Betting from "@/Components/Betting";
 import HighestBidder from "@/Components/HighestBidder";
 import BoughtCard from "@/Components/BoughtCard";
 import SellCard from "@/Components/SellCard";
+
+//contract instance & Network Details
+
+import DefiContractConnection from "./Functionality/ContractConnection";
+import NetworkDetails from "./Functionality/NetworkDetails";
 
 //Stone, Paper & Scissor
 import { FaHandRock } from "react-icons/fa";
@@ -45,6 +50,38 @@ export default function Home() {
   const [playerChoice, setPlayerChoice] = useState();
   const [computerChoice, setComputerChoice] = useState(1);
 
+  //contract data.
+
+  const [tokenBalance, setTokenBalance] = useState();
+  const [chainID, setChainID] = useState();
+  const [chainName, setChainName] = useState();
+
+  //Functions of the contract.
+
+  const getUserTokenBalance = async () => {
+    try {
+      const contractInstance = await DefiContractConnection();
+      const tokenBal = await contractInstance.getMybalance();
+      setTokenBalance(parseInt(tokenBal));
+    } catch (error) {
+      console.log("Something wrong" + error);
+    }
+  };
+
+  //get Network details from window.etherem.request method
+  const getNetworkDetails = async () => {
+    const { blockchainID, blockchainName } = await NetworkDetails();
+    setChainID(blockchainID);
+    setChainName(blockchainName);
+
+    console.log(blockchainID, blockchainName);
+  };
+
+  useEffect(() => {
+    getUserTokenBalance();
+    getNetworkDetails();
+  });
+
   return (
     <div className="bg-black mt-2">
       <div className="flex justify-center">
@@ -60,19 +97,25 @@ export default function Home() {
           </p>
           <div className="text-2xl ">
             {" "}
-            <p>Your Balance : 0</p>
+            <p>Your Balance : {tokenBalance ? tokenBalance : 0}</p>
           </div>
         </div>
         <div>
           <p className="text-2xl">
             Network Name:
-            <span className="text-2xl text-yellow-400"> SurbhiSubnet</span>
+            <span className="text-2xl text-yellow-400">
+              {" "}
+              {chainName ? chainName : 0}
+            </span>
           </p>
         </div>
         <div>
           <p className="text-2xl">
             Network Chain ID:
-            <span className="text-2xl text-yellow-400"> 12012</span>
+            <span className="text-2xl text-yellow-400">
+              {" "}
+              {chainID ? chainID : 0}
+            </span>
           </p>
         </div>
         <div className="justify-end flex">
